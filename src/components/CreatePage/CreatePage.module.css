@@ -1,97 +1,94 @@
-
-.createPageWrapper{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 5rem;
-    margin: 1.5rem;
+.createPageWrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 5rem;
+  margin: 1.5rem;
 }
-.inputPageTitleWrapper{
-    grid-column-start: 1;
-    grid-row-start: 1;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-start;
-    border-bottom: 0.1rem solid rgba(209, 209, 209, 0.562);
-    margin-block-end: 2.2rem;
+.inputPageTitleWrapper {
+  grid-column-start: 1;
+  grid-row-start: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  border-bottom: 0.1rem solid rgba(209, 209, 209, 0.562);
+  margin-block-end: 2.2rem;
 }
-.inputPageTitleWrapper input{
-    border: none;
-    background-color: #f5f5fb00;
-    color: rgb(42 42 151);
-    font-size: 1.2rem;
-   
+.inputPageTitleWrapper input {
+  border: none;
+  background-color: #f5f5fb00;
+  color: rgb(42 42 151);
+  font-size: 1.2rem;
 }
 .inputPageTitleWrapper ::placeholder {
-    color: rgb(42 42 151);
-    font-weight: bold;
-    font-size: 1.2rem;
+  color: rgb(42 42 151);
+  font-weight: bold;
+  font-size: 1.2rem;
 }
-.imgPageTitle{
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-right: 1.5rem;
+.imgPageTitle {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1.5rem;
 }
-.autorInfoWrapper{
-    grid-column-start: 3;
-    grid-row-start: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+.autorInfoWrapper {
+  grid-column-start: 3;
+  grid-row-start: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
-.autorInfoWrapper p{
-    color: rgb(42 42 151)
+.autorInfoWrapper p {
+  color: rgb(42 42 151);
 }
-.buttonAuthor{
-    margin-left: 1rem;
-    width: 4rem;
-    height: 2rem;
-    border: none;
-    border-radius: 1.2rem;
-    background-color: #263b6e;
-    color: white;
-    font-weight: bold;
-}
-
-.buttonAddNewFileWrapper{
-    grid-column-start: 4;
-    grid-row-start: 1;
-    display: flex;
-    justify-content: flex-end;;
-    align-items: center;
-}
-.buttonAddNew{
-    width: 70%;
-    height: 2rem;
-    background-color: #263b6e;
-    border: none;
-    border-radius: 0.2rem;
-    color: white;
-    font-size: 0.9rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;   
-}
-.imgAddFile{
-    margin-right: 0.2rem;
+.buttonAuthor {
+  margin-left: 1rem;
+  width: 4rem;
+  height: 2rem;
+  border: none;
+  border-radius: 1.2rem;
+  background-color: #263b6e;
+  color: white;
+  font-weight: bold;
 }
 
-.inputAddFileWrapper{
-    grid-column-start: 1;
-    grid-column-end: 5;
-    grid-row-start: 2;
-    grid-row-end: 5;
-    background-color: aliceblue;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 0.1rem solid #5c9aef;
+.buttonAddNewFileWrapper {
+  grid-column-start: 4;
+  grid-row-start: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
-.inputAddFileWrapper input{
-    display: none;
+.buttonAddNew {
+  width: 70%;
+  height: 2rem;
+  background-color: #263b6e;
+  border: none;
+  border-radius: 0.2rem;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.inputAddFileWrapper img{
-    height: 2rem;
-    width: 2rem;
- 
+.imgAddFile {
+  margin-right: 0.2rem;
+}
+
+.inputAddFileWrapper {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 2;
+  grid-row-end: 5;
+  background-color: aliceblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.1rem solid #5c9aef;
+}
+.inputAddFileWrapper input {
+  display: none;
+}
+.inputAddFileWrapper img {
+  height: 2rem;
+  width: 2rem;
 }
