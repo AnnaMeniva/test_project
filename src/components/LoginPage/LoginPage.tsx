@@ -12,7 +12,7 @@ interface FormValues {
   email: string;
   password: string;
 }
-
+// todo: add interface
 const LoginForm: React.FC<FormikProps<FormValues>> = ({
   touched,
   errors,
