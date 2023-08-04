@@ -1,0 +1,49 @@
+.itemSubmenu{
+    border: none;
+}
+.itemImg{
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.2rem;
+}
+.submenuWrapper, 
+.submenuFilesWrapper{ 
+    width: 8rem;
+    border-radius: 0.5rem;
+    border: 0.1rem solid black;
+    padding: 1rem;
+    background-color: white;
+    position: absolute;
+    z-index: 1;
+    right: 0;
+}
+.submenuWrapper{
+    height: 7rem;
+}
+.submenuFilesWrapper{
+    height: 5.4rem;
+}
+
+.itemSubmenu{
+    font-size: 1rem;
+}
+.submenuButton{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+.submenuButton button{
+    color: rgb(42 42 151);
+    margin: 0.2rem 0;
+    padding: 0;
+    cursor: pointer;
+    background: none ;
+}
+.submenuWrapper p,
+.submenuFilesWrapper p{
+    color:rgb(0, 183, 255);    
+    border-bottom: 0.1rem solid rgba(209, 209, 209, 0.562);
+    text-align: initial;
+    margin: 0.3rem;
+}

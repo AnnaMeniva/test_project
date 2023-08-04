@@ -1,0 +1,25 @@
+.headerWrapper{
+    grid-area: h;
+    background-color: blue;
+    display: flex;
+    justify-content: end;
+
+}
+.headerWrapper :nth-child(3){
+    border: 0.15rem solid white;
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.4rem;
+}
+
+.headerButton{
+    background-color: blue;
+    margin: 1.5rem;
+    color: white;
+    border: none;
+    font-size: 1rem
+}
+
+.headerButton a{
+    text-decoration: none;
+    color: white;
+}

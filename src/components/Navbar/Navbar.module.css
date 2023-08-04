@@ -1,0 +1,34 @@
+.menu{
+    height: 100%;
+    grid-area: n;
+    display: flex;
+    flex-direction: column;
+    background-color:rgb(204 220 233 / 48%);
+    padding: 3rem 2rem;
+    font-stretch: expanded;
+}
+
+.item a{
+    color: rgb(42 42 151);
+    text-decoration: none;  
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-family: sans-serif;
+    margin: 0.7rem 0;
+} 
+
+.item {
+    margin: 0.5rem;
+}
+
+.menuTitle p{
+    margin-left: 0.5rem;
+    color:rgb(0, 183, 255);
+    font-size: 1.1rem;
+}
+.navItems{
+    height: 1.3rem;
+    width: 1.3rem;
+    margin-right: 0.5rem;
+}

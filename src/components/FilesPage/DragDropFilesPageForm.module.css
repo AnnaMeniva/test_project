@@ -1,0 +1,26 @@
+.formAddFileWrapper{
+
+    width: 100%;
+    height: 100%;
+}
+.formAddFileWrapper input{
+    display: none;
+}
+.labelFormAdd{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.buttonFormAdd{
+    border: none;
+    color: white;
+    height: 2.6rem;
+    width: 9.5rem;
+    background-color: #214297;
+    border-radius: 0.3rem;
+    font-size: 1.1rem;
+}
+.labelFormAdd p{
+    color: #214297;
+    font-family: sans-serif;
+}

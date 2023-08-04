@@ -1,0 +1,85 @@
+body{
+    background-color: rgb(195 218 241 / 16%);
+}
+
+.loginPageWrapper h1{
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(to right, #161616 50%, #02b2f5 50%);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 450;
+    margin-top: 6rem;
+}
+.formContainer{
+    display: grid;
+    position: absolute;
+    top: 43%;
+    left: 50%;
+    width: 22rem;
+    padding: 2rem;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+.formControl{
+    background-color: rgb(195 218 241 / 16%);
+    padding: 0.2rem;
+    height: 2rem;
+    border: none;
+    border-radius: 0.2rem;
+}
+ 
+.formContainer label{
+    font-family: revert;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    color: #263b6e;
+    display: flex;
+    align-items: center;
+}
+
+.formSubmitsWrapper{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 2rem;
+    
+}
+.formSubmitsWrapper :nth-child(3){
+    grid-row-start: 2;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    height: 2.5rem;
+    background-color: white;
+    border: solid 0.1rem;
+    border-radius: 0.2rem;
+    margin-top: 2rem;
+}
+
+.formSubmitsWrapper :nth-child(2){
+    margin-left: 1rem;
+    height: 2rem;
+    background-color: #263b6e;
+    color: white;
+    border: none;
+    border-radius: 0.2rem;   
+}
+.formSubmitsWrapper a{
+    text-decoration: none;
+    color: blue(118, 118, 255)
+}
+.formErrors {
+    color: red;
+}
+
+.singInButton a{
+    color: white;
+}
+.loginButton a{  
+    color:#263b6e;
+}
+.imgLoginForm{
+    margin-right: 0.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
+}

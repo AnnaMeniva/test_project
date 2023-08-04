@@ -1,0 +1,27 @@
+.submenuSortWrapper{
+    position: absolute;
+    z-index: 1;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: white;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,0.2);  
+}
+
+.itemSubmenuSort{
+    display: flex;
+    border: none;
+    align-items: center;
+    background-color: #f0f8ff00;
+    font-size: 1rem;
+    color: #2d2db9;
+    cursor: pointer;
+    margin: 0.1rem;
+}
+.itemSubmenuSort:hover{
+    color:rgb(0, 183, 255);  
+}
+.imgSubmenuSort{
+    height: 1.2rem;
+    width: 1.2rem;
+    margin-right: 0.5rem;
+}

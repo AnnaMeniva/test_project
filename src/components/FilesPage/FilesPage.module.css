@@ -1,0 +1,133 @@
+.filesPageWrapper{
+    margin: 1.5rem;
+}
+.dragDropWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.1rem solid aqua;
+    background-color: aliceblue;
+    height: 9rem;
+    width: 100%;
+    padding-top: 1rem;
+}
+.headerTable{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem;
+}
+
+.inputSearchWrapper{
+    display: flex;
+    border-bottom: 0.1rem solid rgba(209, 209, 209, 0.562);
+   
+}
+.inputSearchWrapper input{
+    border: none;
+    background-color: #f0f8ff00;
+    font-size: 1rem;
+}
+.inputSearchWrapper input:focus{
+    outline: none;  
+}
+.inputSearch ::placeholder{
+    color:  #8F8F8F;
+}
+.imgSearch{
+    width: 1.5rem;
+    height: 1.5rem;
+} 
+.buttonsFilterWrapper{
+    display: flex;
+    align-items: center;
+}
+.buttonsFilterWrapper p{
+    color:rgb(0, 183, 255);   
+}
+.buttonFilter{
+    margin: 0 1rem;
+    padding: 0.3rem 1rem;
+    font-size: 1rem;
+    color: #214297;;
+    border: 0.1rem solid #214297;;
+    border-radius: 1rem ;
+    cursor: pointer;
+}
+.buttonsFilterWrapper :last-child{
+    margin-right: 0;
+}
+.buttonFilterActive{
+    color: white;
+    background-color: #214297;
+    border: none
+}
+
+.tableWrapper{
+    display: flex;
+    flex-direction: column;
+}
+.tableWrapper tbody tr{
+    height: 7rem;
+    width: 100%;
+    padding: 1rem;
+    background-color: rgb(204 220 233 / 48%);
+    border-bottom: 0.5rem solid whitesmoke;
+    color: rgb(38, 38, 116)
+}
+.tableWrapper tbody tr td:first-child{
+    text-align: center;
+   
+}
+.columnFileName{
+    color: #17177e;
+    font-weight: bold;
+    padding-left: 6rem;
+}
+.columnCreatedAt{
+    color: #17177e;
+    font-weight: 500;
+}
+
+.usersImg {
+    height: 3rem;
+    width: 3rem;
+}
+
+.buttonSubmenu{
+    border: none;
+    background-color: rgb(204 220 233 / 0%);
+    cursor: pointer;   
+}
+
+.paginationButtons{
+    display: flex;
+    justify-content: center;
+    list-style-type: none;   
+}
+.paginationButtons li{
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    color: #17177e;
+    background-color: rgb(204 220 233 / 48%);
+    margin: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+}
+.nextButton,
+.preButton{
+    display: none;
+}
+.paginationButtons a{  
+    display: block;
+    height: 2rem;
+    width: 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.paginationActive a{
+    border-radius: 50%;
+    color: white;
+    background-color: #17177e;
+}

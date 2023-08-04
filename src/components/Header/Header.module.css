@@ -1,0 +1,46 @@
+.headerWrapper{
+    grid-area: h;
+    background-color: rgb(24, 24, 66);
+    display: flex;
+    align-items: center;  
+    height: 5rem; 
+}
+
+.headerWrapper button{
+    border: 0.15rem solid #d63be700;
+    border-radius: 0.3rem;
+    padding: 0.2rem 1rem;
+    margin: 1.5rem;
+    background-color: rgb(219 68 210);
+    margin-left: auto;
+    font-weight: 600; 
+}
+
+.headerButton a{
+    text-decoration: none;
+    color: white;
+}
+
+.headerLogo{  
+    margin: 1.5rem 0 1.5rem 4rem;
+    color:white 
+}
+
+.headerWrapper h1{
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(to right, #fbfbfb 50%, #53bbe3 50%);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin: 1.5rem;
+}
+
+.avatar{
+    margin-right: 1.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 2rem;
+    border: 0.1rem solid red;
+}

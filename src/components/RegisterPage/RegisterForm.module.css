@@ -1,0 +1,56 @@
+body{
+    background-color: rgba(190, 190, 190, 0.164);
+}
+
+.registerPageWrapper h1{
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(to right, #161616 50%, #53bbe3 50%);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 350;
+    margin-top: 6rem;
+}
+.formContainer{
+    display: grid;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 22rem;
+    padding: 2rem;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+.formControl{
+    background-color: rgba(190, 190, 190, 0.164);
+    padding: 0.2rem;
+    height: 2rem;
+    border: none;
+    border-radius: 0.2rem;
+}
+ 
+.formContainer label{
+    font-family: revert;
+    margin: 0.5rem;
+}
+
+.formSubmitsWrapper{
+    display: flex;
+    justify-content: end;   
+}
+
+.formButton{
+    height: 2rem;
+    width: 50%;
+    background-color: #263b6e;
+    color: white;
+    border: none;
+    border-radius: 0.2rem;  
+    margin-top: 2rem; 
+}
+
+.formErrors {
+    color: red;
+}

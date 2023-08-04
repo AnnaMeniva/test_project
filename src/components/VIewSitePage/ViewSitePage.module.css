@@ -1,0 +1,158 @@
+table {
+    border-collapse: collapse;
+}
+.viewSitePageWrapper{
+    display: flex;
+    flex-direction: column;
+    margin: 1.5rem;
+}
+.tableHeader tr{
+    height: 5rem; 
+    border-bottom: 0.1rem solid rgba(209, 209, 209, 0.562);
+}
+.viewSitePageWrapper .tableHeader tr :nth-child(2) .buttonFilter,
+.viewSitePageWrapper thead tr :nth-child(3) .buttonFilter,
+.viewSitePageWrapper thead tr :nth-child(4) .buttonFilter{
+    padding: 0 2rem;
+}
+.tableHeader tr td:last-child button {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0.5rem;
+}
+.tableHeader tr td button {
+    color: rgb(47 47 157);
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    padding: 0;
+}
+.buttonAddNew {
+    width: 100%;
+    height: 2rem;
+    background-color: #263b6e;
+    border: none;
+    border-radius: 0.2rem;  
+    cursor: pointer;
+}
+.buttonAddNew a{
+    text-decoration: none;
+    color: white;
+}
+.tableHeader tr:nth-child(2){
+    height: 1rem; 
+    border-bottom: none;
+}
+.tableBody td {  
+    padding: 0 2rem;
+    text-align: left;
+    position: relative;  
+}
+.tableBody tr td:last-child {
+    text-align: center;
+}
+.viewSitePageWrapper tbody tr{
+    height: 7rem;
+    padding: 1rem;
+    background-color: rgb(204 220 233 / 48%);
+    border-bottom: 0.5rem solid whitesmoke;
+    color: rgb(38, 38, 116)
+}
+.buttonStatusActive{
+    width: 8rem;
+    height: 2rem;
+    border: none;
+    border-radius: 1.2rem;
+    background-color:rgba(145, 236, 127, 0.74);
+    color: white;
+    font-size: 1.2rem;
+}
+.buttonStatus{
+    width: 8rem;
+    height: 2rem;
+    border: none;
+    border-radius: 1.2rem;
+    background-color:rgba(238, 46, 46, 0.74);
+    color: white;
+    font-size: 1.2rem;
+}
+.columnPageTitle{
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-family: revert;
+}
+.buttonAuthor{
+    margin-left: 1rem;
+    width: 4rem;
+    height: 2rem;
+    border: none;
+    border-radius: 1.2rem;
+    background-color: #263b6e;
+    color:white;
+    font-weight: bold;
+}
+.buttonSubmenu{
+    border: none;
+    background-color: rgb(204 220 233 / 0%);
+    cursor: pointer;    
+}
+.imgAddFile{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.infoTable{
+    font-size: larger;
+}
+.submenuWrapper{
+    position: absolute;
+    z-index: 1;
+    right: 0;
+}
+.paginationButtons{
+    display: flex;
+    justify-content: center;
+    list-style-type: none;   
+}
+.paginationButtons li{
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    color: #17177e;
+    background-color: rgb(204 220 233 / 48%);
+    margin: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+}
+.nextButton,
+.preButton{
+    display: none;
+}
+.paginationButtons a{  
+    display: block;
+    height: 2rem;
+    width: 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.paginationActive a{
+    border-radius: 50%;
+    color: white;
+    background-color: #17177e;
+}
+.buttonFilter{
+    cursor: pointer;
+    background-color: #f0f8ff00;
+}
+.columnAuthor{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 2.4rem;
+}
+.columnCreatedAt{
+    display: flex;
+    justify-content: space-between;
+}
