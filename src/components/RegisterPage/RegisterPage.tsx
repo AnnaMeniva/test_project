@@ -1,8 +1,8 @@
 import React from "react";
 import s from "./RegisterForm.module.css";
 import { withFormik, FormikProps, Form, Field } from "formik";
-import { Header } from "../Header/Header";
 import SchemRegisterForm from "../common/Schema/SchemaRegisterForm";
+import { Header } from "../Header/Header";
 
 interface FormValues {
   email: string;

@@ -5,8 +5,16 @@
     align-items: center;  
     height: 5rem; 
 }
-
-.headerWrapper button{
+.headerButtonSingIn button{
+    border: 0.15rem solid white;
+    border-radius: 0.3rem;
+    padding: 0.2rem 1rem;
+    margin: 1.5rem;
+    background-color: rgb(24, 24, 66);
+    margin-left: auto;
+    font-weight: 600; 
+}
+.headerButton{
     border: 0.15rem solid #d63be700;
     border-radius: 0.3rem;
     padding: 0.2rem 1rem;
@@ -15,6 +23,7 @@
     margin-left: auto;
     font-weight: 600; 
 }
+
 
 .headerButton a{
     text-decoration: none;

@@ -5,14 +5,15 @@ import SchemaLoginForm from "../common/Schema/SchemaLoginForm";
 import { Link, useNavigate } from "react-router-dom";
 import email from "../common/Image/icons8-email-32.png";
 import password from "../common/Image/icons8-password.svg";
-import { users } from "../../redux/Redux-store";
-
+import { useDispatch, useSelector } from "react-redux";
+import { userIsAuth } from "../../redux/usersSlice";
+import { number } from "yup";
 
 interface FormValues {
   email: string;
   password: string;
 }
-// todo: add interface
+
 const LoginForm: React.FC<FormikProps<FormValues>> = ({
   touched,
   errors,
@@ -22,22 +23,23 @@ const LoginForm: React.FC<FormikProps<FormValues>> = ({
   const [login, setLogin] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (login) navigate("/view_site_page", {});
   }, [login, navigate]);
 
   const isLogin = () => {
-    const findUser = users.filter(
-      (user) => user.email === values.email && user.password === values.password
-    );
-    if (findUser.length) {
+   const user =  dispatch(userIsAuth({email: values.email, password: values.password} ))
+
+   if (user.payload.email) {
       setLogin(true);
     } else {
       setLogin(false);
       setError(true);
     }
-  };
+  }
+   
 
   return (
     <Form className={s.formContainer}>

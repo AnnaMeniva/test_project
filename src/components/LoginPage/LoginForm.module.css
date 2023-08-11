@@ -5,7 +5,7 @@ body {
 .loginPageWrapper {
   display: flex;
   justify-content: center;
-  margin: 2rem;
+  margin-top: 4rem;
 }
 .loginPageWrapper h1 {
   background-image: linear-gradient(to right, #161616 50%, #02b2f5 50%);
@@ -16,9 +16,10 @@ body {
 .formContainer {
   display: grid;
   position: absolute;
-  top: 43%;
+  top: 45%;
   left: 50%;
   width: 22rem;
+  margin: 2rem 0;
   padding: 2rem;
   transform: translate(-50%, -50%);
   background-color: white;
