@@ -67,7 +67,7 @@ const RegisterPage: React.FC = () => {
   return (
     <>
       <div>
-        <Header />
+        <Header/>
       </div>
 
       <div className={s.registerPageWrapper}>

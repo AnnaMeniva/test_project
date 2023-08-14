@@ -7,7 +7,6 @@ import email from "../common/Image/icons8-email-32.png";
 import password from "../common/Image/icons8-password.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { userIsAuth } from "../../redux/usersSlice";
-import { number } from "yup";
 
 interface FormValues {
   email: string;
@@ -23,6 +22,7 @@ const LoginForm: React.FC<FormikProps<FormValues>> = ({
   const [login, setLogin] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,16 +30,20 @@ const LoginForm: React.FC<FormikProps<FormValues>> = ({
   }, [login, navigate]);
 
   const isLogin = () => {
-   const user =  dispatch(userIsAuth({email: values.email, password: values.password} ))
+    const user = dispatch(
+      userIsAuth({
+        email: values.email,
+        password: values.password,
+      })
+    );
 
-   if (user.payload.email) {
+    if (user.payload.isAuth) {
       setLogin(true);
     } else {
       setLogin(false);
       setError(true);
     }
-  }
-   
+  };
 
   return (
     <Form className={s.formContainer}>
@@ -63,7 +67,11 @@ const LoginForm: React.FC<FormikProps<FormValues>> = ({
       <div className={s.formSubmitsWrapper}>
         <Link to="/forgot_password">Forgot password?</Link>
 
-        <button className={s.singInButton} onClick={() => isLogin()}>
+        <button
+          className={s.singInButton}
+          type="submit"
+          onClick={() => isLogin()}
+        >
           Sing in
         </button>
 

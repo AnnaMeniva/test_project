@@ -8,7 +8,7 @@ import s from './Layout.module.css'
 const Layout: React.FC = () =>{
     return(
         <div className={s.contentWrapper}>
-    <Header/>
+    <Header />
     <Outlet/>
     <Navbar/>  
       </div>
