@@ -19,7 +19,7 @@ export const initialState: Array<DataUserInterface> = [
         password: 'Qweqwe123!',
         avatar: "https://img.freepik.com/premium-vector/cat-head-colorful-gradient-logo-vector_334862-14.jpg?w=826",
         isAdmin: false,
-        isAuth: true
+        isAuth: false
     },
     {
         userId: 2,
@@ -27,7 +27,7 @@ export const initialState: Array<DataUserInterface> = [
         email: "franik@gmail.com",
         password: "Qweqwe321#",
         isAdmin: false,
-        isAuth: true,
+        isAuth: false,
         avatar: "https://img.freepik.com/premium-vector/apes-monkey-head-colorful-gradient-logo-vector_334862-10.jpg?w=826"
     }
 ]
@@ -35,15 +35,34 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers:{
-    userIsAuth: (state, action: PayloadAction<{email: string, password: string}>)=>{
+    userIsAuth: (state, action: PayloadAction<{email: string, password: string, isAuth?: boolean}>)=>{
+      state.map((user)=>{
+              
+        if(user.email === action.payload.email &&
+          user.password === action.payload.password){
+          user.isAuth = true
+          action.payload.isAuth = true
+        } else {
+          user.isAuth = false
+        } return user
       
-        if (!state.filter((user) =>  user.email === action.payload.email && user.password === action.payload.password ).length) {
-          action.payload.email = ''
-        } 
+      })
+      console.log(111,current(state))
+    },
+    // currentUser:(state, action: PayloadAction<{email: string, password: string, isAuth?: boolean, avatar?: string}>)=>{
+    //     state.filter((user)=>{
+    //     if(user.email === action.payload.email){
+    //        return user
+    //     }
+    //       console.log(8888,user)
+    //     })
+    // }
             
+   
     }
+
   }
-})
+)
                 
         
 export const {userIsAuth} = usersSlice.actions

@@ -175,7 +175,7 @@ const FilesPage: React.FC = () => {
                           <SubmenuFiles
                             submenu={submenu}
                             setSubmenu={setSubmenu}
-                            changeFileTitle={changeFileTitle}
+                            changeFileTitle={changeFileTitle} 
                             id={item.id}
                           />
                         ) : null}
