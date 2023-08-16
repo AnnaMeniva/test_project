@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import s from "./ViewSitePage.module.css";
+import s from "./ViewSitePage.module.scss";
 import ReactPaginate from "react-paginate";
 import submenuImg from "../common/Image/three-dots.svg";
 import addFile from "../common/Image/icons8-add-file-64.png";

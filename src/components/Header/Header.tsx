@@ -8,8 +8,6 @@ export const Header: React.FC = () => {
   const user = useSelector((state: any) => state.users);
   const currentUser = user.filter((el: any) => el.isAuth === true);
 
-console.log(333, currentUser.isAuth)
-
   return (
     <div className={s.headerWrapper}>
       <img className={s.headerLogo} src={logo} alt="logo" />
