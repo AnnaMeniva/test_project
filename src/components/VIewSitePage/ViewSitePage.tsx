@@ -6,12 +6,20 @@ import addFile from "../common/Image/icons8-add-file-64.png";
 import Submenu from "./Submenu/Submenu";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePageTitleName } from "../../redux/postsSlice";
-import SortPageTitpeSubmenu from "./Sort/SortPageTitle";
-import SortAuthorSubmenu from "./Sort/SortAuthor";
+import {
+  noSort,
+  sortByAuthorABCReducer,
+  sortByAuthorReverseReducer,
+  sortByDateReducer,
+  sortByDateReverseReducer,
+  sortByStatusFalseFirstreducer,
+  sortByStatusTrueFirstReducer,
+  sortByTitlePageABCReducer,
+  sortByTitlePageReverseReducer,
+  updatePageTitleName,
+} from "../../redux/postsSlice";
 import Moment from "react-moment";
-import SortDateSubmenu from "./Sort/SortDate";
-import SortStatusSubmenu from "./Sort/SortStatus";
+import SortMenu from "./Sort/SortMenu";
 
 const ViewSitePage: React.FC = () => {
   const posts = useSelector((state: any) => state.posts);
@@ -86,6 +94,47 @@ const ViewSitePage: React.FC = () => {
   const sortDateClick = () => {
     setSortMenuDate(true);
   };
+
+  const sortByDateABC = () => {
+    dispatch(sortByDateReducer());
+    setSortMenuDate(false);
+  };
+  const sortByDateReverse = () => {
+    dispatch(sortByDateReverseReducer());
+    setSortMenuDate(false);
+  };
+  const sortByTitleABC = () => {
+    dispatch(sortByTitlePageABCReducer());
+    setSortMenuPageTitle(false);
+  };
+  const sortByTitleReverse = () => {
+    dispatch(sortByTitlePageReverseReducer());
+    setSortMenuPageTitle(false);
+  };
+  const sortByAuthorABC = () => {
+    dispatch(sortByAuthorABCReducer());
+    setSortMenuAuthor(false);
+  };
+  const sortByAuthorReverse = () => {
+    dispatch(sortByAuthorReverseReducer());
+    setSortMenuAuthor(false);
+  };
+  const sortByStatusTrueFirst = () => {
+    dispatch(sortByStatusTrueFirstReducer());
+    setSortMenuStatus(false);
+  };
+  const sortByStatusFalseFirst = () => {
+    dispatch(sortByStatusFalseFirstreducer());
+    setSortMenuStatus(false);
+  };
+  const noSortPage = () => {
+    dispatch(noSort());
+    setSortMenuDate(false);
+    setSortMenuPageTitle(false);
+    setSortMenuAuthor(false);
+    setSortMenuStatus(false);
+  };
+
   return (
     <div className={s.viewSitePageWrapper}>
       <table>
@@ -99,9 +148,14 @@ const ViewSitePage: React.FC = () => {
                 Page title
               </button>
               {sortMenuPageTitle ? (
-                <SortPageTitpeSubmenu
-                  sortMenuPageTitle={sortMenuPageTitle}
-                  setSortMenuPageTitle={setSortMenuPageTitle}
+                <SortMenu
+                  sortMenu={sortMenuPageTitle}
+                  setSortMenu={setSortMenuPageTitle}
+                  sortABC={sortByTitleABC}
+                  sortCBA={sortByTitleReverse}
+                  noSortPage={noSortPage}
+                  contentABC={"A-z"}
+                  contentCBA={"Z-a"}
                 />
               ) : null}
             </td>
@@ -111,9 +165,14 @@ const ViewSitePage: React.FC = () => {
                 Created
               </button>
               {sortMenuDate ? (
-                <SortDateSubmenu
-                  sortMenuDate={sortMenuDate}
-                  setSortMenuDate={setSortMenuDate}
+                <SortMenu
+                  sortMenu={sortMenuDate}
+                  setSortMenu={setSortMenuDate}
+                  sortABC={sortByDateABC}
+                  sortCBA={sortByDateReverse}
+                  noSortPage={noSortPage}
+                  contentABC={"New posts first"}
+                  contentCBA={"Old posts first"}
                 />
               ) : null}
             </td>
@@ -122,9 +181,14 @@ const ViewSitePage: React.FC = () => {
                 Status
               </button>
               {sortMenuStatus ? (
-                <SortStatusSubmenu
-                  sortMenuStatus={sortMenuStatus}
-                  setSortMenuStatus={setSortMenuStatus}
+                <SortMenu
+                  sortMenu={sortMenuStatus}
+                  setSortMenu={setSortMenuStatus}
+                  sortABC={sortByStatusTrueFirst}
+                  sortCBA={sortByStatusFalseFirst}
+                  noSortPage={noSortPage}
+                  contentABC={"Published first"}
+                  contentCBA={"Unpublished first"}
                 />
               ) : null}
             </td>
@@ -136,9 +200,14 @@ const ViewSitePage: React.FC = () => {
                 Author
               </button>
               {sortMenuAuthor ? (
-                <SortAuthorSubmenu
-                  sortMenuAuthor={sortMenuAuthor}
-                  setSortMenuAuthor={setSortMenuAuthor}
+                <SortMenu
+                  sortMenu={sortMenuAuthor}
+                  setSortMenu={setSortMenuAuthor}
+                  sortABC={sortByAuthorABC}
+                  sortCBA={sortByAuthorReverse}
+                  noSortPage={noSortPage}
+                  contentABC={"A-z"}
+                  contentCBA={"Z-a"}
                 />
               ) : null}
             </td>

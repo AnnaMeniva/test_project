@@ -115,7 +115,7 @@ export const postsSlice = createSlice({
             console.log("delete", current(state))
             return state.filter(el => el.id !== action.payload.id) 
         },
-        sortTitlePageABC:(state) =>{ 
+        sortByTitlePageABCReducer:(state) =>{ 
             state.sort((a, b) => {
                 const nameA = a.PageTitle.toUpperCase(); 
                 const nameB = b.PageTitle.toUpperCase(); 
@@ -128,7 +128,7 @@ export const postsSlice = createSlice({
                         return 0;
                     });      
         },
-        sortTitlePageCBA:(state) =>{
+        sortByTitlePageReverseReducer:(state) =>{
                 state.sort((a, b) => {
                     const nameA = a.PageTitle.toUpperCase(); 
                     const nameB = b.PageTitle.toUpperCase(); 
@@ -145,7 +145,7 @@ export const postsSlice = createSlice({
                 console.log(current(state))
                 return initialState
         },
-        sortAuthorABC:(state) =>{ 
+        sortByAuthorABCReducer:(state) =>{ 
             state.sort((a, b) => {
                 const nameA = a.Author.toUpperCase(); 
                 const nameB = b.Author.toUpperCase(); 
@@ -158,7 +158,7 @@ export const postsSlice = createSlice({
                         return 0;
                     });      
         },
-        sortAuthorCBA:(state) =>{
+        sortByAuthorReverseReducer:(state) =>{
             state.sort((a, b) => {
                 const nameA = a.Author.toUpperCase(); 
                 const nameB = b.Author.toUpperCase(); 
@@ -171,18 +171,18 @@ export const postsSlice = createSlice({
                         return 0;
                     }).reverse();      
         },
-        sortStatusTrueFirst:(state) =>{
+        sortByStatusTrueFirstReducer:(state) =>{
             const trueFirst = state.sort((a, b) => Number(b.Status) - Number(a.Status))
                 return trueFirst   
         },
-        sortStatusFalseFirst:(state)=>{
+        sortByStatusFalseFirstreducer:(state)=>{
             const falseFirst = state.sort((a, b) => Number(a.Status) - Number(b.Status))
                 return falseFirst
         },
-        sortDate:(state) =>{
+        sortByDateReducer:(state) =>{
             state.sort((a, b) => Date.parse(b.CreatedAt) - Date.parse(a.CreatedAt))
         },
-        sortDateReverse:(state) =>{
+        sortByDateReverseReducer:(state) =>{
             state.sort((a, b) => Date.parse(b.CreatedAt) - Date.parse(a.CreatedAt)).reverse()
         }
   
@@ -195,8 +195,9 @@ export const postsSlice = createSlice({
 
 
 export const  {updateStatus, updatePageTitleName, deleteItem, 
-            sortTitlePageABC, sortTitlePageCBA, noSort, sortAuthorABC, sortAuthorCBA,
-            sortStatusFalseFirst, sortStatusTrueFirst, sortDate, sortDateReverse } = postsSlice.actions
+    sortByTitlePageABCReducer, sortByTitlePageReverseReducer, noSort, sortByAuthorABCReducer, 
+    sortByAuthorReverseReducer, sortByStatusTrueFirstReducer, sortByStatusFalseFirstreducer,
+    sortByDateReducer, sortByDateReverseReducer } = postsSlice.actions
 
 export const selectStatus = (state: RootState) => state
 export default postsSlice.reducer
