@@ -20,6 +20,7 @@ import {
 } from "../../redux/postsSlice";
 import Moment from "react-moment";
 import SortMenu from "./Sort/SortMenu";
+import CommonButtonTitleColoms from "./CommonButtonTitleColoms";
 
 const ViewSitePage: React.FC = () => {
   const posts = useSelector((state: any) => state.posts);
@@ -141,12 +142,11 @@ const ViewSitePage: React.FC = () => {
         <thead className={s.tableHeader}>
           <tr>
             <td>
-              <button
+              <CommonButtonTitleColoms
                 className={s.buttonFilter}
                 onClick={activateMenuSortTitle}
-              >
-                Page title
-              </button>
+                title={"Page title"}
+              />
               {sortMenuPageTitle ? (
                 <SortMenu
                   sortMenu={sortMenuPageTitle}
@@ -161,9 +161,11 @@ const ViewSitePage: React.FC = () => {
             </td>
 
             <td>
-              <button className={s.buttonFilter} onClick={sortDateClick}>
-                Created
-              </button>
+              <CommonButtonTitleColoms
+                className={s.buttonFilter}
+                onClick={sortDateClick}
+                title={"Created"}
+              />
               {sortMenuDate ? (
                 <SortMenu
                   sortMenu={sortMenuDate}
@@ -177,9 +179,11 @@ const ViewSitePage: React.FC = () => {
               ) : null}
             </td>
             <td>
-              <button className={s.buttonFilter} onClick={sortStatusClick}>
-                Status
-              </button>
+              <CommonButtonTitleColoms
+                className={s.buttonFilter}
+                onClick={sortStatusClick}
+                title={"Status"}
+              />
               {sortMenuStatus ? (
                 <SortMenu
                   sortMenu={sortMenuStatus}
@@ -193,12 +197,11 @@ const ViewSitePage: React.FC = () => {
               ) : null}
             </td>
             <td>
-              <button
+              <CommonButtonTitleColoms
                 className={s.buttonFilter}
                 onClick={activateMenuSortAuthor}
-              >
-                Author
-              </button>
+                title={"Author"}
+              />
               {sortMenuAuthor ? (
                 <SortMenu
                   sortMenu={sortMenuAuthor}

@@ -3,7 +3,7 @@ import s from "./SortPageTitle.module.css";
 import sortDown from "..//../common/Image/icons8-descending-sorting-30.png";
 import sortUp from "..//../common/Image/icons8-sort-amount-up-32.png";
 import sortDefault from "..//../common/Image/icons8-sorting-24.png";
-import CommonButton from "./commonButton";
+import CommonButton from "./CommonButton";
 
 interface PropsType {
   sortMenu: boolean;

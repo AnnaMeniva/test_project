@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ReactPaginate from "react-paginate";
-import s from "./FilesPage.module.css";
+import s from "./FilesPage.module.scss";
 import submenuImg from "../common/Image/three-dots.svg";
 import { DragDropFilesPageForm } from "./DragDropFilesPageForm";
 import search from "../common/Image/icons8-search-30.png";
@@ -9,6 +9,7 @@ import Moment from "react-moment";
 import SubmenuFiles from "./Submenu/SubmenuFiles";
 import { updateFileName } from "../../redux/fileSlice";
 import debounce from "lodash.debounce";
+import CommonButtonFilterFiles from "./CommonButtonFilter/CommonButtonFilterFiles";
 
 const FilesPage: React.FC = () => {
   const files = useSelector((state: any) => state.files);
@@ -20,7 +21,6 @@ const FilesPage: React.FC = () => {
   const [edit, setActiveEdit] = useState(false);
   const [fileTitle, setFileTitle] = useState("");
   const [searchInput, setSearchInput] = useState("");
-  
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -112,18 +112,27 @@ const FilesPage: React.FC = () => {
         </div>
         <div className={s.buttonsFilterWrapper}>
           <p>Filter</p>
-          <button className={s.buttonFilter} onClick={OnClickImageList}>
-            Image
-          </button>
-          <button className={s.buttonFilter} onClick={OnClickFileList}>
-            Files
-          </button>
-          <button className={s.buttonFilter} onClick={OnClickAudioList}>
-            Audio
-          </button>
-          <button className={s.buttonFilter} onClick={OnClickVideoList}>
-            Video
-          </button>
+
+          <CommonButtonFilterFiles
+            className={s.buttonFilter}
+            onClick={OnClickImageList}
+            context={"Image"}
+          />
+          <CommonButtonFilterFiles
+            className={s.buttonFilter}
+            onClick={OnClickFileList}
+            context={"Files"}
+          />
+          <CommonButtonFilterFiles
+            className={s.buttonFilter}
+            onClick={OnClickAudioList}
+            context={"Audio"}
+          />
+          <CommonButtonFilterFiles
+            className={s.buttonFilter}
+            onClick={OnClickVideoList}
+            context={"Video"}
+          />
         </div>
       </div>
       <div className={s.tableWrapper}>
@@ -175,7 +184,7 @@ const FilesPage: React.FC = () => {
                           <SubmenuFiles
                             submenu={submenu}
                             setSubmenu={setSubmenu}
-                            changeFileTitle={changeFileTitle} 
+                            changeFileTitle={changeFileTitle}
                             id={item.id}
                           />
                         ) : null}

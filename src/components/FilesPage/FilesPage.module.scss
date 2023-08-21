@@ -57,9 +57,10 @@
 .buttonsFilterWrapper :last-child{
     margin-right: 0;
 }
-.buttonFilterActive{
+.buttonFilter:focus{
     color: white;
     background-color: #214297;
+    
     border: none
 }
 
@@ -71,7 +72,7 @@
     height: 7rem;
     width: 100%;
     padding: 1rem;
-    background-color: rgb(204 220 233 / 48%);
+    background-color: rgba(204, 220, 233, 0.48);
     border-bottom: 0.5rem solid whitesmoke;
     color: rgb(38, 38, 116)
 }
@@ -96,7 +97,7 @@
 
 .buttonSubmenu{
     border: none;
-    background-color: rgb(204 220 233 / 0%);
+    background-color: rgba(204, 220, 233, 0);
     cursor: pointer;   
 }
 
@@ -110,7 +111,7 @@
     width: 2rem;
     border-radius: 50%;
     color: #17177e;
-    background-color: rgb(204 220 233 / 48%);
+    background-color: rgba(204, 220, 233, 0.48);
     margin: 0.5rem;
     cursor: pointer;
     text-align: center;
