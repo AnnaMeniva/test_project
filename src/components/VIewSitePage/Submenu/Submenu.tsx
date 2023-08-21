@@ -4,7 +4,6 @@ import edit from "../../common/Image/icons8-edit-64.png";
 import trash from "../../common/Image/icons8-trash-64.png";
 import book from "../../common/Image/icons8-open-book-50.png";
 import { deleteItem, updateStatus } from "../../../redux/postsSlice";
-
 import { useDispatch } from "react-redux";
 
 interface SubmenuProps {

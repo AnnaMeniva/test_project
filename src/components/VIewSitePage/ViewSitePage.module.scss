@@ -24,7 +24,6 @@ table {
 }
 .tableHeader tr td button {
     color: rgba(47, 47, 157, 1);
-    font-size: 0.8rem;
     font-weight: bold;
     border: none;
     padding: 0;
@@ -144,6 +143,7 @@ table {
 .buttonFilter{
     cursor: pointer;
     background-color: #f0f8ff00;
+    font-size: 1rem;
 }
 .columnAuthor{
     display: flex;
