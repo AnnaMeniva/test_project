@@ -1,33 +1,40 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import s from "./Header.module.css";
 import logo from "../common/Image/icons8-assassins-creed-logo.svg";
-import { useSelector } from "react-redux";
+import avatar from "../common/Image/three-dots.svg";
+import { useAuth } from "../hooks/useAuth";
+import { useAppDispatch } from "../../redux/hooks";
+import { logout } from "../../redux/userSlice";
+import { removeTokenFromLocalStorage } from "../helpers/localstorage.helper";
 
 export const Header: React.FC = () => {
-  const user = useSelector((state: any) => state.users);
-  const currentUser = user.filter((el: any) => el.isAuth === true);
+  const isAuth = useAuth();
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+  const lodoutHeandler = () => {
+    dispatch(logout());
+    removeTokenFromLocalStorage("token");
+    navigate("/home");
+  };
 
   return (
     <div className={s.headerWrapper}>
       <img className={s.headerLogo} src={logo} alt="logo" />
       <h1>RivalCMS</h1>
 
-      {currentUser.isAuth ? (
-        <button className={s.headerButtonSingIn}>
-          <Link to={"/login"}>Sing in</Link>
-        </button>
-      ) : (
+      {isAuth ? (
         <>
-          <button className={s.headerButton}>
-            <Link to={"/login"}>Pro Plan</Link>
+          <button className={s.headerButton} onClick={() => lodoutHeandler()}>
+            Pro Plan
           </button>
-          <img
-            className={s.userAvatar}
-            src={currentUser[0]?.avatar}
-            alt="avatar"
-          />
+          <img className={s.userAvatar} src={avatar} alt="avatar" />
         </>
+      ) : (
+        <button className={s.headerButtonSingIn}>
+          <Link to={"/user"}>Sing in</Link>
+        </button>
       )}
     </div>
   );

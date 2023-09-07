@@ -8,7 +8,7 @@ export const HeaderMainPage: React.FC = () => {
       <button className={s.headerButton}>Pricing</button>
       <button className={s.headerButton}>About</button>
       <button className={s.headerButton}>
-        <Link to={"/login"}>Sing in</Link>
+        <Link to={"/user"}>Sing in</Link>
       </button>
     </div>
   );

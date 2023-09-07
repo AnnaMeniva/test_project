@@ -1,0 +1,35 @@
+.footerWrapper{
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 4rem;  
+    background: rgb(7, 49, 70); 
+    align-items: center; 
+}
+.footerButtons a{
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    color: white;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+.imgLogo{
+    height: 1.8rem;
+    width: 1.8rem;
+}
+@media (max-width: 700px){
+    .footerWrapper{
+        height: 11rem;
+    }
+    .footerButtons{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .footerWrapper{
+        display: flex;
+        flex-direction: column;
+    }
+   
+}
