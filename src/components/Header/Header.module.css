@@ -5,12 +5,12 @@
     align-items: center;  
     height: 5rem; 
 }
-.headerButtonSingIn button{
+.headerButtonSingIn {
     border: 0.15rem solid white;
     border-radius: 0.3rem;
     padding: 0.2rem 1rem;
     margin: 1.5rem;
-    background-color: rgb(24, 24, 66);
+    background-color: rgb(238, 238, 243);
     margin-left: auto;
     font-weight: 600; 
 }

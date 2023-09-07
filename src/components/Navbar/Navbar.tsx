@@ -12,7 +12,7 @@ import home from "../common/Image/icons8-home-page-32.png";
 import add from "../common/Image/icons8-add-file-32.png";
 import trash from "../common/Image/icons8-trash-64.png";
 
-const activeLink: any = ({ isActive }: any) =>
+const activeLink: any= ({ isActive }: any) =>
   isActive
     ? {
         fontWeight: "bold",

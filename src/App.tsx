@@ -1,43 +1,33 @@
-import React from 'react';
-import {Route, Routes} from 'react-router-dom';
-import s from './App.module.css';
-import { CreatePage } from './components/CreatePage/CreatePage';
-import FilesPage from './components/FilesPage/FilesPage';
-import Layout from './components/Layout/Layout';
-import LoginPage from './components/LoginPage/LoginPage';
-import { MainPage } from './components/MainPage/MainPage';
-import RegisterPage from './components/RegisterPage/RegisterPage';
-import ViewSitePage from './components/VIewSitePage/ViewSitePage';
+import React, { useEffect } from "react";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router/router";
+import { getTokenFromLocalStorage } from "./components/helpers/localstorage.helper";
+import { useAppDispatch } from "./hooks";
+import { login, logout } from "./redux/userSlice";
+import { AuthService } from "./services/auth.service";
 
+const App: React.FC = () => {
+  const dispatch = useAppDispatch();
 
+  const checkAuth = async () => {
+    const token = getTokenFromLocalStorage();
+    try {
+      if (token) {
+        const data = await AuthService.getProfile();
+        if (data) {
+          dispatch(login(data));
+        } else {
+          dispatch(logout());
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-function App() {
-  return (
-    <>
-      <div className={s.appWwrapper}>
-      </div>
-        <div className={s.appWrapperContent}>
-          <Routes>
-          <Route path='/login' element={<LoginPage/>}/>
-          <Route path='/register' element={<RegisterPage/>}/>
-          <Route path='/home' element={<MainPage/>}/>
-            <Route path='/' element={ <Layout/>}>
-            ViewSitePage
-                <Route path='/view_site_page' element={<ViewSitePage/>}/>
-                <Route path='/create_page' element={<CreatePage/>}/>
-                <Route path='/blog_articles'/>
-                <Route path='/files' element={<FilesPage/>}/>
-                <Route path='/users' />
-                <Route path='/subscriptions' />
-                <Route path='/archived_pages' />
-                <Route path='/themes'/>
-                <Route path='/plugins' />
-                <Route path='/upgrade_plans'/>
-            </Route>
-          </Routes>      
-        </div>
-    </>
-  );
-}
-
+  useEffect(() => {
+    checkAuth();
+  }, []);
+  return <RouterProvider router={router} />;
+};
 export default App;
