@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
         <p> Manage </p>
       </div>
       <div className={s.item}>
-        <NavLink to="/view_site_page" style={activeLink}>
+        <NavLink to="/pages" style={activeLink}>
           <img className={s.navItems} src={home} alt="home" /> View site
         </NavLink>
       </div>

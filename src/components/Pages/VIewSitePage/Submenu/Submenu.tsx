@@ -3,16 +3,19 @@ import s from "./Submenu.module.css";
 import edit from "../../../common/Image/icons8-edit-64.png";
 import trash from "../../../common/Image/icons8-trash-64.png";
 import book from "../../../common/Image/icons8-open-book-50.png";
-import { deleteItem, updateStatus } from "../../../../redux/postsSlice";
+import { updateStatus } from "../../../../redux/postsSlice";
 import { useDispatch } from "react-redux";
+
+import { Form } from "react-router-dom";
 
 interface SubmenuProps {
   submenu: boolean;
   ref?: any;
   setSubmenu?: any;
   id: number;
-  changePageTitle: (e: any) => void;
+  changePageTitle:()=>void
 }
+
 const Submenu: React.FC<SubmenuProps> = ({
   submenu,
   setSubmenu,
@@ -40,14 +43,16 @@ const Submenu: React.FC<SubmenuProps> = ({
       <p>Manage</p>
       <div className={s.submenuButton}>
         <button
+          type="submit"
           className={s.itemSubmenu}
-          onClick={(e) => {
-            changePageTitle(e);
+          onClick={() => {
+            changePageTitle()
             setSubmenu(false);
           }}
         >
           <img className={s.itemImg} src={edit} alt="edit" /> Edit file name
         </button>
+
         <button
           className={s.itemSubmenu}
           onClick={() => {
@@ -62,17 +67,22 @@ const Submenu: React.FC<SubmenuProps> = ({
         >
           <img className={s.itemImg} src={book} alt="book" /> Change status
         </button>
-        <button
-          className={s.itemSubmenu}
-          onClick={() => {
-            setSubmenu(false);
-            if (window.confirm("Delete this post?")) {
-              dispatch(deleteItem({ id }));
-            }
-          }}
-        >
-          <img className={s.itemImg} src={trash} alt="trash" /> Delete page
-        </button>
+        <Form method="delete" action="/pages">
+          <button
+            className={s.itemSubmenu}
+            type="submit"
+            name="id"
+            value={id}
+            onSubmit={() => {
+              setSubmenu(false);
+              // if (window.confirm("Delete this post?")) {
+              //   dispatch(deleteItem({ id }));
+              // }
+            }}
+          >
+            <img className={s.itemImg} src={trash} alt="trash" /> Delete page
+          </button>
+        </Form>
       </div>
     </div>
   );

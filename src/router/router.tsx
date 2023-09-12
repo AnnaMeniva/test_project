@@ -6,7 +6,8 @@ import FilesPage from "../components/Pages/FilesPage/FilesPage";
 import LoginPage from "../components/Pages/LoginPage/LoginPage";
 import { MainPage } from "../components/Pages/MainPage/MainPage";
 import RegisterPage from "../components/Pages/RegisterPage/RegisterPage";
-import ViewSitePage from "../components/Pages/VIewSitePage/ViewSitePage";
+import ViewSitePage, { pageAction, pageLoader } from "../components/Pages/VIewSitePage/ViewSitePage";
+
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +16,9 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/view_site_page",
+        path: "/pages",
+        action: pageAction,
+        loader: pageLoader,
         element: <ViewSitePage />,
       },
       {

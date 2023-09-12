@@ -23,3 +23,12 @@ export interface IResponseUserData {
   user: IUser;
   token: string;
 }
+
+export interface IPage {
+  title: string;
+  createAt: string;
+  updateAt: string;
+  id: number;
+  user: IUser;
+  status: boolean;
+}

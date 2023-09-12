@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
         setTokenToLocalStorage("token", data.token);
 
         dispatch(login(data));
-        navigate("/view_site_page");
+        navigate("/pages");
         console.log(111, "login");
       }
     } catch (err: any) {
