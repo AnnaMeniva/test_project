@@ -4,20 +4,12 @@ import ReactPaginate from "react-paginate";
 import submenuImg from "../../common/Image/three-dots.svg";
 import addFile from "../../common/Image/icons8-add-file-64.png";
 import Submenu from "./Submenu/Submenu";
-import { Form, useLoaderData, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import {
-  noSort,
-  sortByAuthorABCReducer,
-  sortByAuthorReverseReducer,
-  sortByDateReducer,
-  sortByDateReverseReducer,
-  sortByStatusFalseFirstreducer,
-  sortByStatusTrueFirstReducer,
-  sortByTitlePageABCReducer,
-  sortByTitlePageReverseReducer,
-  updatePageTitleName,
-} from "../../../redux/postsSlice";
+  Form,
+  useLoaderData,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import Moment from "react-moment";
 import SortMenu from "./Sort/SortMenu";
 import CommonButtonTitleColoms from "./CommonButtonTitleColoms";
@@ -30,18 +22,21 @@ export const pageLoader = async () => {
 };
 
 export const pageAction = async ({ request }: any) => {
-  console.log(33333, request);
   switch (request.method) {
     case "PATCH": {
       const formData = await request.formData();
-      console.log(77777, formData);
       const page = {
         id: formData.get("id"),
-        title: formData.get("title"),
+        title: formData.get("title") ? formData.get("title") : undefined,
+        status: formData.get("status")
+          ? formData.get("status") === "unpublished"
+            ? "published"
+            : "unpublished"
+          : undefined,
       };
       await instance.patch(`/pages/${page.id}`, page);
 
-      return page;
+      return null;
     }
     case "DELETE": {
       const formData = await request.formData();
@@ -53,35 +48,47 @@ export const pageAction = async ({ request }: any) => {
 };
 
 const ViewSitePage: React.FC = () => {
-  //const posts = useSelector((state: any) => state.posts);
   const pages = useLoaderData() as IPage[];
-  console.log(pages);
+  const [data, setData] = useState  <IPage[]>(pages);
 
+  const [params, setParams] = useSearchParams();
   const [submenu, setSubmenu] = useState(false);
   const [selectedRow, setSelectedRow] = useState(0);
 
   const [pageNumber, setPageNumber] = useState(0);
   const [edit, setActiveEdit] = useState(false);
+
   const [sortMenuPageTitle, setSortMenuPageTitle] = useState(false);
   const [sortMenuAuthor, setSortMenuAuthor] = useState(false);
   const [sortMenuDate, setSortMenuDate] = useState(false);
   const [sortMenuStatus, setSortMenuStatus] = useState(false);
 
-  const dispatch = useDispatch();
-
   const inputRef = useRef<HTMLDivElement>(null);
-
+  const buttonRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const postPrePage = 5;
   const pageActive = pageNumber * postPrePage;
-  const pageCount = Math.ceil(pages.length / postPrePage);
+  const pageCount = Math.ceil(data.length / postPrePage);
+
+  useEffect(() => {
+    fetchPosts();
+    setData(pages);
+  }, [pages]);
+
+  const fetchPosts = async () => {
+    await instance
+      .get<IPage[]>(`/pages?${params}`)
+      .then((res) => setData(res.data));
+  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent): void {
       if (
         inputRef.current &&
-        !inputRef.current.contains(event.target as Node)
+        !inputRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
       ) {
         setActiveEdit(false);
       }
@@ -105,69 +112,6 @@ const ViewSitePage: React.FC = () => {
     setActiveEdit(true);
   };
 
-  // const onPageTitleChange = (
-  //   setPageTitle: React.Dispatch<React.SetStateAction<string>>,
-  //   event: React.ChangeEvent<HTMLInputElement>,
-  //   id: number
-  // ) => {
-  //   setSelectedRow(id);
-  //   setPageTitle(event.currentTarget.value);
-
-  // };
-
-  const activateMenuSortTitle = () => {
-    setSortMenuPageTitle(true);
-  };
-  const activateMenuSortAuthor = () => {
-    setSortMenuAuthor(true);
-  };
-  const sortStatusClick = () => {
-    setSortMenuStatus(true);
-  };
-  const sortDateClick = () => {
-    setSortMenuDate(true);
-  };
-
-  const sortByDateABC = () => {
-    dispatch(sortByDateReducer());
-    setSortMenuDate(false);
-  };
-  const sortByDateReverse = () => {
-    dispatch(sortByDateReverseReducer());
-    setSortMenuDate(false);
-  };
-  const sortByTitleABC = () => {
-    dispatch(sortByTitlePageABCReducer());
-    setSortMenuPageTitle(false);
-  };
-  const sortByTitleReverse = () => {
-    dispatch(sortByTitlePageReverseReducer());
-    setSortMenuPageTitle(false);
-  };
-  const sortByAuthorABC = () => {
-    dispatch(sortByAuthorABCReducer());
-    setSortMenuAuthor(false);
-  };
-  const sortByAuthorReverse = () => {
-    dispatch(sortByAuthorReverseReducer());
-    setSortMenuAuthor(false);
-  };
-  const sortByStatusTrueFirst = () => {
-    dispatch(sortByStatusTrueFirstReducer());
-    setSortMenuStatus(false);
-  };
-  const sortByStatusFalseFirst = () => {
-    dispatch(sortByStatusFalseFirstreducer());
-    setSortMenuStatus(false);
-  };
-  const noSortPage = () => {
-    dispatch(noSort());
-    setSortMenuDate(false);
-    setSortMenuPageTitle(false);
-    setSortMenuAuthor(false);
-    setSortMenuStatus(false);
-  };
-
   return (
     <div className={s.viewSitePageWrapper}>
       <table>
@@ -176,16 +120,16 @@ const ViewSitePage: React.FC = () => {
             <td>
               <CommonButtonTitleColoms
                 className={s.buttonFilter}
-                onClick={activateMenuSortTitle}
+                onClick={() => {
+                  setSortMenuPageTitle(true);
+                }}
                 title={"Page title"}
               />
               {sortMenuPageTitle ? (
                 <SortMenu
                   sortMenu={sortMenuPageTitle}
                   setSortMenu={setSortMenuPageTitle}
-                  sortABC={sortByTitleABC}
-                  sortCBA={sortByTitleReverse}
-                  noSortPage={noSortPage}
+                  sortBy={"title"}
                   contentABC={"A-z"}
                   contentCBA={"Z-a"}
                 />
@@ -195,34 +139,30 @@ const ViewSitePage: React.FC = () => {
             <td>
               <CommonButtonTitleColoms
                 className={s.buttonFilter}
-                onClick={sortDateClick}
+                onClick={() => setSortMenuDate(true)}
                 title={"Created"}
               />
               {sortMenuDate ? (
                 <SortMenu
                   sortMenu={sortMenuDate}
                   setSortMenu={setSortMenuDate}
-                  sortABC={sortByDateABC}
-                  sortCBA={sortByDateReverse}
-                  noSortPage={noSortPage}
-                  contentABC={"New posts first"}
-                  contentCBA={"Old posts first"}
+                  sortBy={"createAt"}
+                  contentABC={"Old posts first"}
+                  contentCBA={"New posts first"}
                 />
               ) : null}
             </td>
             <td>
               <CommonButtonTitleColoms
                 className={s.buttonFilter}
-                onClick={sortStatusClick}
+                onClick={() => setSortMenuStatus(true)}
                 title={"Status"}
               />
               {sortMenuStatus ? (
                 <SortMenu
                   sortMenu={sortMenuStatus}
                   setSortMenu={setSortMenuStatus}
-                  sortABC={sortByStatusTrueFirst}
-                  sortCBA={sortByStatusFalseFirst}
-                  noSortPage={noSortPage}
+                  sortBy={"status"}
                   contentABC={"Published first"}
                   contentCBA={"Unpublished first"}
                 />
@@ -231,16 +171,14 @@ const ViewSitePage: React.FC = () => {
             <td>
               <CommonButtonTitleColoms
                 className={s.buttonFilter}
-                onClick={activateMenuSortAuthor}
+                onClick={() => setSortMenuAuthor(true)}
                 title={"Author"}
               />
               {sortMenuAuthor ? (
                 <SortMenu
                   sortMenu={sortMenuAuthor}
                   setSortMenu={setSortMenuAuthor}
-                  sortABC={sortByAuthorABC}
-                  sortCBA={sortByAuthorReverse}
-                  noSortPage={noSortPage}
+                  sortBy={"fullName"}
                   contentABC={"A-z"}
                   contentCBA={"Z-a"}
                 />
@@ -257,8 +195,8 @@ const ViewSitePage: React.FC = () => {
         </thead>
 
         <tbody className={s.tableBody}>
-          {pages.length ? (
-            pages
+          {data?.length ? (
+            data
               .slice(pageActive, pageActive + postPrePage)
               .map((page: IPage) =>
                 page ? (
@@ -277,17 +215,11 @@ const ViewSitePage: React.FC = () => {
                             name="title"
                             placeholder={page.title}
                             ref={inputRef as any}
+                            autoFocus
                           />
+
                           <input type="hidden" name="id" value={page.id} />
-                          <button
-                            name="id"
-                            type="submit"
-                            onClick={() => {
-                              setActiveEdit(false);
-                              setSelectedRow(page.id);
-                              
-                            }}
-                          >
+                          <button ref={buttonRef as any} type="submit">
                             ok
                           </button>
                         </Form>
@@ -295,7 +227,6 @@ const ViewSitePage: React.FC = () => {
                         page.title
                       )}
                     </td>
-
                     <td className={s.columnCreatedAt}>
                       <Moment fromNow>{page.createAt}</Moment>
                     </td>
@@ -303,7 +234,9 @@ const ViewSitePage: React.FC = () => {
                     <td className={s.columnStatus}>
                       <button
                         className={
-                          page.status ? s.buttonStatus : s.buttonStatusActive
+                          page.status === "unpublished"
+                            ? s.buttonStatus
+                            : s.buttonStatusActive
                         }
                       >
                         {page.status}
@@ -319,7 +252,7 @@ const ViewSitePage: React.FC = () => {
                     <td className={s.columnSubmenu}>
                       <button
                         className={s.buttonSubmenu}
-                        onClick={(event) => {
+                        onClick={() => {
                           setSelectedRow(page.id);
                           activateSubMenu();
                         }}
@@ -334,6 +267,7 @@ const ViewSitePage: React.FC = () => {
                             setSubmenu={setSubmenu}
                             id={page.id}
                             changePageTitle={changePageTitle}
+                            status={page.status}
                           />
                         ) : null}
                       </div>

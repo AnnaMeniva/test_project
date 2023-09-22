@@ -6,8 +6,12 @@ import FilesPage from "../components/Pages/FilesPage/FilesPage";
 import LoginPage from "../components/Pages/LoginPage/LoginPage";
 import { MainPage } from "../components/Pages/MainPage/MainPage";
 import RegisterPage from "../components/Pages/RegisterPage/RegisterPage";
-import ViewSitePage, { pageAction, pageLoader } from "../components/Pages/VIewSitePage/ViewSitePage";
-
+import ViewSitePage, {
+  pageAction,
+  pageLoader,
+} from "../components/Pages/VIewSitePage/ViewSitePage";
+import UsersPage, { userLoader } from "../components/Pages/UsersPage/UsersPage";
+import ProfilePage, { profileLoader } from "../components/Pages/ProfilePage/ProfilePage";
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +24,18 @@ export const router = createBrowserRouter([
         action: pageAction,
         loader: pageLoader,
         element: <ViewSitePage />,
+        // children:[
+        //   {
+        //     path: "/pages?title={params}",
+        //     element:<ViewSitePage/>,
+        //     loader: async ({params, request}) => {
+        //       const sortData = await fetch(`/pages?title=${params}`)
+        //       return sortData
+        //     }
+        //   }
+        // ]
       },
+      
       {
         path: "/create_page",
         element: <CreatePage />,
@@ -33,7 +48,9 @@ export const router = createBrowserRouter([
         element: <FilesPage />,
       },
       {
-        path: "/users",
+        path: "/user/all",
+        loader: userLoader,
+        element:<UsersPage/>
       },
       {
         path: "/subscriptions",
@@ -49,6 +66,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/upgrade_plans",
+      },
+      {
+        path: "/auth/profile",
+        element:<ProfilePage/>,
+        loader: profileLoader
       },
     ],
   },

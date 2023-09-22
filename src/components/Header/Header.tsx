@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import s from "./Header.module.css";
 import logo from "../common/Image/icons8-assassins-creed-logo.svg";
 import avatar from "../common/Image/three-dots.svg";
@@ -27,9 +27,11 @@ export const Header: React.FC = () => {
       {isAuth ? (
         <>
           <button className={s.headerButton} onClick={() => lodoutHeandler()}>
-            Pro Plan
+            Log out
           </button>
-          <img className={s.userAvatar} src={avatar} alt="avatar" />
+          <NavLink to={"/auth/profile"}>
+            <img className={s.userAvatar} src={avatar} alt="avatar" />
+          </NavLink>
         </>
       ) : (
         <button className={s.headerButtonSingIn}>

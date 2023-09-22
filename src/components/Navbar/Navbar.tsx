@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
         </NavLink>
       </div>
       <div className={s.item}>
-        <NavLink to="/users" style={activeLink}>
+        <NavLink to="/user/all" style={activeLink}>
           <img className={s.navItems} src={users} alt="users" /> Users
         </NavLink>
       </div>

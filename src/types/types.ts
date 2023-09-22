@@ -15,7 +15,7 @@ export interface IUser {
   password: string | undefined;
   fullName: string | undefined;
   avatarUrl?: string | undefined;
-  createAt: Date | undefined;
+  createAt: string ;
   role: boolean | undefined;
 }
 
@@ -30,5 +30,6 @@ export interface IPage {
   updateAt: string;
   id: number;
   user: IUser;
-  status: boolean;
+  status: string;
 }
+

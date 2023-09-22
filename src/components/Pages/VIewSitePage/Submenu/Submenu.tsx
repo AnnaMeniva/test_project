@@ -3,9 +3,6 @@ import s from "./Submenu.module.css";
 import edit from "../../../common/Image/icons8-edit-64.png";
 import trash from "../../../common/Image/icons8-trash-64.png";
 import book from "../../../common/Image/icons8-open-book-50.png";
-import { updateStatus } from "../../../../redux/postsSlice";
-import { useDispatch } from "react-redux";
-
 import { Form } from "react-router-dom";
 
 interface SubmenuProps {
@@ -13,7 +10,8 @@ interface SubmenuProps {
   ref?: any;
   setSubmenu?: any;
   id: number;
-  changePageTitle:()=>void
+  changePageTitle: () => void;
+  status: string;
 }
 
 const Submenu: React.FC<SubmenuProps> = ({
@@ -21,9 +19,8 @@ const Submenu: React.FC<SubmenuProps> = ({
   setSubmenu,
   changePageTitle,
   id,
+  status,
 }) => {
-  const dispatch = useDispatch();
-
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -46,27 +43,27 @@ const Submenu: React.FC<SubmenuProps> = ({
           type="submit"
           className={s.itemSubmenu}
           onClick={() => {
-            changePageTitle()
+            changePageTitle();
             setSubmenu(false);
           }}
         >
           <img className={s.itemImg} src={edit} alt="edit" /> Edit file name
         </button>
+        <Form method="patch" action="/pages">
+          <button
+            type="submit"
+            name="status"
+            value={status}
+            className={s.itemSubmenu}
+            onSubmit={() => {
+              setSubmenu(false);
+            }}
+          >
+            <input type="hidden" name="id" value={id} />
+            <img className={s.itemImg} src={book} alt="book" /> Change status
+          </button>
+        </Form>
 
-        <button
-          className={s.itemSubmenu}
-          onClick={() => {
-            dispatch(
-              updateStatus({
-                id,
-                Status: false,
-              })
-            );
-            setSubmenu(false);
-          }}
-        >
-          <img className={s.itemImg} src={book} alt="book" /> Change status
-        </button>
         <Form method="delete" action="/pages">
           <button
             className={s.itemSubmenu}

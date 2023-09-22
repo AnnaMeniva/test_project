@@ -20,8 +20,7 @@ const RegisterPage: React.FC = () => {
       });
 
       if (data) {
-        navigate("/view_site_page");
-        console.log(111, "CREATE");
+        navigate("/pages");
       }
     } catch (err: any) {
       const error = err.response?.data.message;

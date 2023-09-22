@@ -4,29 +4,24 @@ import sortDown from "..//../../common/Image/icons8-descending-sorting-30.png";
 import sortUp from "..//../../common/Image/icons8-sort-amount-up-32.png";
 import sortDefault from "..//../../common/Image/icons8-sorting-24.png";
 import CommonButton from "./CommonButton";
+import { useNavigate } from "react-router-dom";
 
 interface PropsType {
   sortMenu: boolean;
   setSortMenu: any;
   contentCBA: string;
   contentABC: string;
-  sortABC: () => void;
-  sortCBA: () => void;
-  noSortPage: () => void;
+  sortBy: string;
 }
 const SortMenu: React.FC<PropsType> = ({
   sortMenu,
   setSortMenu,
-  sortABC,
-  sortCBA,
-  noSortPage,
   contentABC,
-  contentCBA
+  contentCBA,
+  sortBy,
 }) => {
-
-
   const sortMenuRef = useRef<HTMLDivElement>(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     function handleClickOutside(event: MouseEvent): void {
       if (
@@ -45,7 +40,7 @@ const SortMenu: React.FC<PropsType> = ({
   return (
     <div className={s.submenuSortWrapper} ref={sortMenuRef}>
       <CommonButton
-        onClick={sortABC}
+        onClick={() => navigate(`/pages?${sortBy}=asc`)}
         imageClassName={s.imgSubmenuSort}
         buttonClassName={s.itemSubmenuSort}
         altButton={"sortDown"}
@@ -53,7 +48,7 @@ const SortMenu: React.FC<PropsType> = ({
         content={contentABC}
       />
       <CommonButton
-        onClick={sortCBA}
+        onClick={() => navigate(`/pages?${sortBy}=desc`)}
         imageClassName={s.imgSubmenuSort}
         buttonClassName={s.itemSubmenuSort}
         altButton={"sortUp"}
@@ -61,7 +56,7 @@ const SortMenu: React.FC<PropsType> = ({
         content={contentCBA}
       />
       <CommonButton
-        onClick={noSortPage}
+        onClick={() => navigate("/pages")}
         imageClassName={s.imgSubmenuSort}
         buttonClassName={s.itemSubmenuSort}
         altButton={"sortDefault"}

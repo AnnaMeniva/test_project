@@ -1,0 +1,43 @@
+
+.usersPageWrapper{
+    display: flex;
+    flex-direction: column;
+    margin: 1.5rem;
+}
+.tableHeader tr{
+    height: 5rem; 
+    border-bottom: 0.1rem solid rgba(209, 209, 209, 0.562);
+}
+.usersPageWrapper tbody tr{
+    height: 7rem;
+    padding: 1rem;
+    background-color: rgba(204, 220, 233, 0.48);
+    border-bottom: 0.5rem solid whitesmoke;
+    color: rgb(38, 38, 116)
+}
+.tableHeader tr td {
+    color: rgba(47, 47, 157, 1);
+    font-weight: bold;
+    border: none;
+    padding: 0;
+}
+.inputSearchWrapper{
+    display: flex;
+    border-bottom: 0.1rem solid rgba(209, 209, 209, 0.562);
+}
+.inputSearchWrapper input{
+    border: none;
+    background-color: #f0f8ff00;
+    font-size: 1rem;
+}
+.inputSearchWrapper input:focus{
+    outline: none;  
+}
+.inputSearch ::placeholder{
+    color:  #8F8F8F;
+}
+.iconSearch{
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #8F8F8F;
+} 

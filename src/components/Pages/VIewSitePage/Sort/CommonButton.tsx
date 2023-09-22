@@ -19,7 +19,7 @@ const CommonButton: React.FC<PropsType> = ({
     <>
       <button className={buttonClassName} onClick={onClick}>
         <img className={imageClassName} src={image} alt={altButton} />
-       Sort by: {content}
+        Sort by: {content}
       </button>
     </>
   );

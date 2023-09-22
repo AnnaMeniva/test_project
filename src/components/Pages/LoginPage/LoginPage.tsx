@@ -19,13 +19,11 @@ const LoginPage: React.FC = () => {
     try {
       e.preventDefault();
       const data = await AuthService.login({ email, password });
-
       if (data) {
         setTokenToLocalStorage("token", data.token);
 
         dispatch(login(data));
         navigate("/pages");
-        console.log(111, "login");
       }
     } catch (err: any) {
       const error = err.response?.data.message;
