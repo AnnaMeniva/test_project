@@ -33,3 +33,10 @@ export interface IPage {
   status: string;
 }
 
+export interface IFile {
+  title: string
+  createdDate: string
+  id: number
+  signedUrl: string
+  type: string
+}

@@ -4,68 +4,96 @@ import s from "./FilesPage.module.scss";
 import submenuImg from "../../common/Image/three-dots.svg";
 import { DragDropFilesPageForm } from "./DragDropFilesPageForm";
 import search from "../../common/Image/icons8-search-30.png";
-import { useDispatch, useSelector } from "react-redux";
 import Moment from "react-moment";
 import SubmenuFiles from "./Submenu/SubmenuFiles";
-import { updateFileName } from "../../../redux/fileSlice";
 import debounce from "lodash.debounce";
 import CommonButtonFilterFiles from "./CommonButtonFilter/CommonButtonFilterFiles";
+import { instance } from "../../../api/api";
+import { IFile } from "../../../types/types";
+import { Form, useLoaderData } from "react-router-dom";
 
-const FilesPage: React.FC = () => {
-  const files = useSelector((state: any) => state.files);
+interface IFileProps {
+  limit: number;
+}
+export const filesLoader = async () => {
+  const { data } = await instance.get<IFile[]>("/files");
+  return data;
+};
 
-  const [tableFiles, setTableFiles] = useState(files);
-  const [pageNumber, setPageNumber] = useState(0);
+export const filesAction = async ({ request }: any) => {
+  switch (request.method) {
+    case "PATCH": {
+      const formData = await request.formData();
+      const file = {
+        id: formData.get("id"),
+        title: formData.get("title") ? formData.get("title") : undefined,
+      };
+      await instance.patch(`/files/${file.id}`, file);
+      return null;
+    }
+    case "DELETE": {
+      const formData = await request.formData();
+      const fileId = formData.get("id");
+      await instance.delete(`files/${fileId}`);
+
+      return null;
+    }
+  }
+};
+const FilesPage: React.FC<IFileProps> = ({ limit =5}) => {
+  const files = useLoaderData() as IFile[];
+
+  const [data, setData] = useState<IFile[]>(files);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>(0);
+
+ // const [pageNumber, setPageNumber] = useState(0);
+
   const [selectedRow, setSelectedRow] = useState(0);
   const [submenu, setSubmenu] = useState(false);
   const [edit, setActiveEdit] = useState(false);
-  const [fileTitle, setFileTitle] = useState("");
+
   const [searchInput, setSearchInput] = useState("");
-
+  console.log(222, files);
   const inputRef = useRef<HTMLInputElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const dispatch = useDispatch();
+  // const postPrePage = 5;
+  // const pageActive = pageNumber * postPrePage;
+  // const pageCount = Math.ceil(data.length / postPrePage);
 
-  const postPrePage = 5;
-  const pageActive = pageNumber * postPrePage;
-  const pageCount = Math.ceil(tableFiles.length / postPrePage);
+  const fetchFiles = async (page: number) => {
+    const response = await instance.get(`files?page=${page}&limit=${limit}`);
+    setData(response.data);
+    setTotalPage(Math.ceil(files.length / limit));
+  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent): void {
       if (
         inputRef.current &&
-        !inputRef.current.contains(event.target as Node)
+        !inputRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
       ) {
         setActiveEdit(false);
-        setFileTitle("");
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [edit, fileTitle]);
+  }, [edit]);
 
+ 
   useEffect(() => {
-    setTableFiles(files);
+    setData(files);
   }, [files]);
-
-  const onChangePage = ({ selected }: any) => {
-    setPageNumber(selected);
-  };
-
-  const onFileNameChange = (
-    setFileTitle: React.Dispatch<React.SetStateAction<string>>,
-    event: React.ChangeEvent<HTMLInputElement>,
-    id: number
-  ) => {
-    setSelectedRow(id);
-    setFileTitle(event.currentTarget.value);
-    dispatch(updateFileName({ id, name: event.target.value }));
-  };
-
-  const changeFileTitle = (e: any) => {
-    setActiveEdit(true);
+  useEffect(() => {
+    fetchFiles(currentPage);
+  }, [currentPage, files]);
+  const onChangePage = (selectedItem: { selected: number }) => {
+    setCurrentPage(selectedItem.selected + 1);
   };
 
   const activateSubMenu = () => {
@@ -73,22 +101,25 @@ const FilesPage: React.FC = () => {
   };
 
   const OnClickVideoList = () => {
-    setTableFiles(files.filter((el: any) => el.type === "video"));
+    setData(files.filter((file) => file.type === "video"));
   };
   const OnClickImageList = () => {
-    setTableFiles(files.filter((el: any) => el.type === "image"));
+    const listImages = files.filter((file) => file.type === "image");
+    setData(listImages);
   };
   const OnClickFileList = () => {
-    setTableFiles(files.filter((el: any) => el.type === "file"));
+    const listFiles = files.filter((file) => file.type === "file");
+    setData(listFiles);
   };
   const OnClickAudioList = () => {
-    setTableFiles(files.filter((el: any) => el.type === "audio"));
+    const listAudios = files.filter((file) => file.type === "audio");
+    setData(listAudios);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
     const regex = new RegExp(event.target.value, "i");
-    setTableFiles(files.filter((el: any) => regex.test(el.name)));
+    setData(files.filter((el: any) => regex.test(el.name)));
   };
   const debouncedChangeHandler = useCallback(debounce(handleChange, 2000), [
     handleChange,
@@ -138,79 +169,86 @@ const FilesPage: React.FC = () => {
       <div className={s.tableWrapper}>
         <table>
           <tbody className={s.tableBody}>
-            {tableFiles.length ? (
-              tableFiles
-                .slice(pageActive, pageActive + postPrePage)
-                .map((item: any) => (
-                  <tr key={item.id}>
-                    <td className={s.columnImageURL}>
-                      <img
-                        className={s.usersImg}
-                        src={item.imageURL}
-                        alt="file"
-                      />
-                    </td>
-                    <td className={s.columnFileName}>
-                      {selectedRow === item.id && edit === true ? (
+            {data.length ? (
+              // data
+              //.slice(pageActive, pageActive + postPrePage)
+              data.map((file: IFile) => (
+                <tr key={file.id}>
+                  <td className={s.columnImageURL}>
+                    <img
+                      className={s.usersImg}
+                      src={file.signedUrl}
+                      alt="file"
+                    />
+                  </td>
+                  <td className={s.columnFileName}>
+                    {selectedRow === file.id && edit === true ? (
+                      <Form
+                        method="patch"
+                        action="/files"
+                        onSubmit={() => setActiveEdit(false)}
+                      >
                         <input
                           type="text"
-                          name="edit"
-                          placeholder={item.name}
-                          value={fileTitle}
+                          name="title"
+                          placeholder={file.title}
                           ref={inputRef as any}
-                          onChange={(e) =>
-                            onFileNameChange(setFileTitle, e, item.id)
-                          }
+                          autoFocus
                         />
-                      ) : (
-                        item.name
-                      )}
-                    </td>
-                    <td className={s.columnCreatedAt}>
-                      <Moment fromNow>{item.createdAt}</Moment>
-                    </td>
-                    <td className={s.columnSubmenu}>
-                      <button
-                        className={s.buttonSubmenu}
-                        onClick={(event) => {
-                          setSelectedRow(item.id);
-                          activateSubMenu();
-                        }}
-                      >
-                        <img src={submenuImg} alt="submenu" />
-                      </button>
-                      <div className={s.submenuWrapper}>
-                        {selectedRow === item.id && submenu === true ? (
-                          <SubmenuFiles
-                            submenu={submenu}
-                            setSubmenu={setSubmenu}
-                            changeFileTitle={changeFileTitle}
-                            id={item.id}
-                          />
-                        ) : null}
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                        <input type="hidden" name="id" value={file.id} />
+                        <button type="submit" ref={buttonRef as any}>
+                          ok
+                        </button>
+                      </Form>
+                    ) : (
+                      file.title
+                    )}
+                  </td>
+                  <td className={s.columnCreatedAt}>
+                    <Moment fromNow>{file.createdDate}</Moment>
+                  </td>
+                  <td className={s.columnSubmenu}>
+                    <button
+                      className={s.buttonSubmenu}
+                      onClick={(event) => {
+                        setSelectedRow(file.id);
+                        activateSubMenu();
+                      }}
+                    >
+                      <img src={submenuImg} alt="submenu" />
+                    </button>
+                    <div className={s.submenuWrapper}>
+                      {selectedRow === file.id && submenu === true ? (
+                        <SubmenuFiles
+                          submenu={submenu}
+                          setSubmenu={setSubmenu}
+                          setActiveEdit={setActiveEdit}
+                          id={file.id}
+                        />
+                      ) : null}
+                    </div>
+                  </td>
+                </tr>
+              ))
             ) : (
               <div>no files</div>
             )}
           </tbody>
         </table>
 
-        {tableFiles.length > 5 ? (
-          <ReactPaginate
-            pageCount={pageCount}
-            onPageChange={onChangePage}
-            previousLabel=""
-            nextLabel=""
-            containerClassName={s.paginationButtons}
-            previousClassName={s.preButton}
-            nextClassName={s.nextButton}
-            activeClassName={s.paginationActive}
-            disabledClassName={s.paginationDisabled}
-          />
-        ) : null}
+        <ReactPaginate
+          pageCount={totalPage}
+          onPageChange={onChangePage}
+          previousLabel=""
+          nextLabel=""
+          containerClassName={s.paginationButtons}
+          previousClassName={s.preButton}
+          nextClassName={s.nextButton}
+          activeClassName={s.paginationActive}
+          disabledClassName={s.paginationDisabled}
+          pageRangeDisplayed={1}
+          marginPagesDisplayed={2}
+        />
       </div>
     </div>
   );

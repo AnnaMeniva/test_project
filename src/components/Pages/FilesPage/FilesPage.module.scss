@@ -76,8 +76,9 @@
 }
 .tableWrapper tbody tr td:first-child{
     text-align: center;
-   
+    width: 8rem;
 }
+
 .columnFileName{
     color: #17177e;
     font-weight: bold;
@@ -89,8 +90,8 @@
 }
 
 .usersImg {
-    height: 3rem;
-    width: 3rem;
+    height: 5.5rem;
+    width: 5.5rem;
 }
 
 .buttonSubmenu{
@@ -114,10 +115,10 @@
     cursor: pointer;
     text-align: center;
 }
-.nextButton,
-.preButton{
-    display: none;
-}
+// .nextButton,
+// .preButton{
+//     display: none;
+// }
 .paginationButtons a{  
     display: block;
     height: 2rem;

@@ -1,5 +1,4 @@
 .formAddFileWrapper{
-
     width: 100%;
     height: 100%;
 }
@@ -11,14 +10,20 @@
     flex-direction: column;
     align-items: center;
 }
-.buttonFormAdd{
+.buttonFormAdd,
+.buttonCreateFile{
     border: none;
     color: white;
     height: 2.6rem;
-    width: 9.5rem;
-    background-color: #214297;
+    width: 9.5rem;  
     border-radius: 0.3rem;
     font-size: 1.1rem;
+}
+.buttonFormAdd{
+    background-color: #214297;
+}
+.buttonCreateFile{
+    background-color: rgb(97 193 12);
 }
 .labelFormAdd p{
     color: #214297;

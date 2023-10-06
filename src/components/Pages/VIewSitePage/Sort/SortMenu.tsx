@@ -35,12 +35,15 @@ const SortMenu: React.FC<PropsType> = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [sortMenu, setSortMenu]);
+  }, [sortMenu]);
 
   return (
     <div className={s.submenuSortWrapper} ref={sortMenuRef}>
       <CommonButton
-        onClick={() => navigate(`/pages?${sortBy}=asc`)}
+        onClick={() => {
+          navigate(`/pages?${sortBy}=asc`);
+          setSortMenu(false);
+        }}
         imageClassName={s.imgSubmenuSort}
         buttonClassName={s.itemSubmenuSort}
         altButton={"sortDown"}
@@ -48,7 +51,10 @@ const SortMenu: React.FC<PropsType> = ({
         content={contentABC}
       />
       <CommonButton
-        onClick={() => navigate(`/pages?${sortBy}=desc`)}
+        onClick={() => {
+          navigate(`/pages?${sortBy}=desc`);
+          setSortMenu(false);
+        }}
         imageClassName={s.imgSubmenuSort}
         buttonClassName={s.itemSubmenuSort}
         altButton={"sortUp"}
@@ -56,7 +62,10 @@ const SortMenu: React.FC<PropsType> = ({
         content={contentCBA}
       />
       <CommonButton
-        onClick={() => navigate("/pages")}
+        onClick={() => {
+          navigate("/pages");
+          setSortMenu(false);
+        }}
         imageClassName={s.imgSubmenuSort}
         buttonClassName={s.itemSubmenuSort}
         altButton={"sortDefault"}

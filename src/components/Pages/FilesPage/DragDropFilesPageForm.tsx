@@ -1,12 +1,13 @@
 import React, { useRef, useState } from "react";
 import s from "./DragDropFilesPageForm.module.css";
-import { useDispatch } from "react-redux";
-import { addFile } from "../../../redux/fileSlice";
+import { Form, useNavigate} from "react-router-dom";
+import { instance } from "../../../api/api";
 
 export const DragDropFilesPageForm: React.FC = () => {
   const [dragActive, setDragActive] = useState(false);
-  const dispatch = useDispatch();
+  const [file, setFile] = useState(null);
   const inputRef = useRef<any>(null);
+  const navigate = useNavigate();
 
   const handleDrag = (e: any) => {
     e.preventDefault();
@@ -18,64 +19,71 @@ export const DragDropFilesPageForm: React.FC = () => {
     }
   };
 
+  const fileSelected = (event: any) => {
+    const file = event.target.files[0];
+    setFile(file);
+  };
+
   const handleDrop = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
+
+    const file = e.dataTransfer.files[0];
+    setFile(file);
     setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      dispatch(addFile(e.dataTransfer.files));
-      handleFiles(e.dataTransfer.files);
-    }
   };
 
-  const handleChange = (e: any) => {
-    e.preventDefault();
-    if (e.target.files && e.target.files[0]) {
-      dispatch(addFile(e.target.files));
-      handleFiles(e.target.files);
-    }
-  };
+  const submit = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
 
-  const onClick = () => {
-    inputRef.current.click();
-  };
+    const formData = new FormData();
+    //@ts-ignore
+    formData.append("file", file);
 
-  const handleFiles = (e: any) => {
+    await instance.post("/files", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
     alert("File added");
+    navigate("/files");
+    setFile(null);
   };
 
   return (
-    <form
+    <div
       className={s.formAddFileWrapper}
       onDrop={(e) => handleDrop(e)}
       onDragLeave={handleDrag}
       onDragOver={handleDrag}
       onDragEnter={handleDrag}
-      onSubmit={(e) => e.preventDefault()}
     >
-      <input
-        ref={inputRef}
-        type="file"
-        accept=".png, .jpg, .jpeg, .webp, .mp4, .mp3, .pdf"
-        onChange={handleChange}
-      />
-      <label htmlFor="file">
-        <div className={s.labelFormAdd}>
-          <button className={s.buttonFormAdd} onClick={onClick}>
+      <div className={s.labelFormAdd}>
+        <Form onSubmit={submit}>
+          <input
+            ref={inputRef}
+            type="file"
+            name="file"
+            accept="image/*"
+            onChange={(event) => fileSelected(event)}
+          />
+          {file ? (
+            <button className={s.buttonCreateFile} type="submit">
+              Create
+            </button>
+          ) : null}
+        </Form>
+        {!file ? (
+          <button
+            className={s.buttonFormAdd}
+            onClick={() => {
+              inputRef.current.click();
+            }}
+          >
             click to upload
           </button>
-          <p>Drag & drop multiple files to upload</p>
-        </div>
-      </label>
-      {dragActive && (
-        <div
-          className={s.active}
-          onDragEnter={handleDrag}
-          onDragLeave={handleDrag}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-        ></div>
-      )}
-    </form>
+        ) : null}
+        <p>Drag & drop multiple files to upload</p>
+      </div>
+    </div>
   );
 };

@@ -2,7 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import { CreatePage } from "../components/Pages/CreatePage/CreatePage";
 import ErrorPage from "../components/Pages/ErrorPage/ErrorPage";
-import FilesPage from "../components/Pages/FilesPage/FilesPage";
+import FilesPage, {
+  filesAction,
+  filesLoader,
+} from "../components/Pages/FilesPage/FilesPage";
 import LoginPage from "../components/Pages/LoginPage/LoginPage";
 import { MainPage } from "../components/Pages/MainPage/MainPage";
 import RegisterPage from "../components/Pages/RegisterPage/RegisterPage";
@@ -11,7 +14,9 @@ import ViewSitePage, {
   pageLoader,
 } from "../components/Pages/VIewSitePage/ViewSitePage";
 import UsersPage, { userLoader } from "../components/Pages/UsersPage/UsersPage";
-import ProfilePage, { profileLoader } from "../components/Pages/ProfilePage/ProfilePage";
+import ProfilePage, {
+  profileLoader,
+} from "../components/Pages/ProfilePage/ProfilePage";
 
 export const router = createBrowserRouter([
   {
@@ -35,7 +40,7 @@ export const router = createBrowserRouter([
         //   }
         // ]
       },
-      
+
       {
         path: "/create_page",
         element: <CreatePage />,
@@ -45,12 +50,14 @@ export const router = createBrowserRouter([
       },
       {
         path: "/files",
-        element: <FilesPage />,
+        loader: filesLoader,
+        action: filesAction,
+        element: <FilesPage limit={5}  />,
       },
       {
         path: "/user/all",
         loader: userLoader,
-        element:<UsersPage/>
+        element: <UsersPage />,
       },
       {
         path: "/subscriptions",
@@ -69,8 +76,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/auth/profile",
-        element:<ProfilePage/>,
-        loader: profileLoader
+        element: <ProfilePage />,
+        loader: profileLoader,
       },
     ],
   },
