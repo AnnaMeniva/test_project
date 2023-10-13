@@ -4,7 +4,7 @@ import book from "../../common/Image/icons8-open-book-50.png";
 import eye from '../../common/Image/icons8-eye-24.png'
 import { DragDropCreatePageForm } from "./DragDropCreatePageForm";
 
-export const CreatePage: React.FC<{}> = () => {
+const CreatePage: React.FC = () => {
   return (
     <div className={s.createPageWrapper}>
       <div className={s.inputPageTitleWrapper}>
@@ -29,3 +29,4 @@ export const CreatePage: React.FC<{}> = () => {
     </div>
   );
 };
+ export default CreatePage

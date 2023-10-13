@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactPaginate from "react-paginate";
 import s from "./FilesPage.module.scss";
 import submenuImg from "../../common/Image/three-dots.svg";
@@ -6,11 +6,10 @@ import { DragDropFilesPageForm } from "./DragDropFilesPageForm";
 import search from "../../common/Image/icons8-search-30.png";
 import Moment from "react-moment";
 import SubmenuFiles from "./Submenu/SubmenuFiles";
-import debounce from "lodash.debounce";
 import CommonButtonFilterFiles from "./CommonButtonFilter/CommonButtonFilterFiles";
 import { instance } from "../../../api/api";
 import { IFile } from "../../../types/types";
-import { Form, useLoaderData } from "react-router-dom";
+import { Form, useLoaderData, useNavigate } from "react-router-dom";
 
 interface IFileProps {
   limit: number;
@@ -40,27 +39,29 @@ export const filesAction = async ({ request }: any) => {
     }
   }
 };
-const FilesPage: React.FC<IFileProps> = ({ limit =5}) => {
+const FilesPage: React.FC<IFileProps> = ({ limit = 5 }) => {
   const files = useLoaderData() as IFile[];
 
   const [data, setData] = useState<IFile[]>(files);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(0);
+  const [selectedRow, setSelectedRow] = useState<number>(0);
+  const [submenu, setSubmenu] = useState<boolean>(false);
+  const [edit, setActiveEdit] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState<string>("");
 
- // const [pageNumber, setPageNumber] = useState(0);
-
-  const [selectedRow, setSelectedRow] = useState(0);
-  const [submenu, setSubmenu] = useState(false);
-  const [edit, setActiveEdit] = useState(false);
-
-  const [searchInput, setSearchInput] = useState("");
-  console.log(222, files);
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const navigate = useNavigate();
 
-  // const postPrePage = 5;
-  // const pageActive = pageNumber * postPrePage;
-  // const pageCount = Math.ceil(data.length / postPrePage);
+  useEffect(() => {
+    const fetchSearchFiles = async (page: number) => {
+      const response = await instance.get(`files?title=${searchInput}`);
+      setData(response.data);
+      setTotalPage(Math.ceil(data.length / limit));
+    };
+    !searchInput ? fetchFiles(currentPage) : fetchSearchFiles(currentPage);
+  }, [searchInput, currentPage]);
 
   const fetchFiles = async (page: number) => {
     const response = await instance.get(`files?page=${page}&limit=${limit}`);
@@ -85,13 +86,14 @@ const FilesPage: React.FC<IFileProps> = ({ limit =5}) => {
     };
   }, [edit]);
 
- 
   useEffect(() => {
     setData(files);
   }, [files]);
+
   useEffect(() => {
     fetchFiles(currentPage);
-  }, [currentPage, files]);
+  }, [currentPage]);
+
   const onChangePage = (selectedItem: { selected: number }) => {
     setCurrentPage(selectedItem.selected + 1);
   };
@@ -116,16 +118,6 @@ const FilesPage: React.FC<IFileProps> = ({ limit =5}) => {
     setData(listAudios);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(event.target.value);
-    const regex = new RegExp(event.target.value, "i");
-    setData(files.filter((el: any) => regex.test(el.name)));
-  };
-  const debouncedChangeHandler = useCallback(debounce(handleChange, 2000), [
-    handleChange,
-    2000,
-  ]);
-
   return (
     <div className={s.filesPageWrapper}>
       <div className={s.dragDropWrapper}>
@@ -138,7 +130,7 @@ const FilesPage: React.FC<IFileProps> = ({ limit =5}) => {
             className={s.inputSearch}
             type="search"
             placeholder="Search for file"
-            onChange={debouncedChangeHandler}
+            onChange={(e) => setSearchInput(e.target.value)}
           />
         </div>
         <div className={s.buttonsFilterWrapper}>
@@ -170,8 +162,6 @@ const FilesPage: React.FC<IFileProps> = ({ limit =5}) => {
         <table>
           <tbody className={s.tableBody}>
             {data.length ? (
-              // data
-              //.slice(pageActive, pageActive + postPrePage)
               data.map((file: IFile) => (
                 <tr key={file.id}>
                   <td className={s.columnImageURL}>
@@ -210,7 +200,7 @@ const FilesPage: React.FC<IFileProps> = ({ limit =5}) => {
                   <td className={s.columnSubmenu}>
                     <button
                       className={s.buttonSubmenu}
-                      onClick={(event) => {
+                      onClick={() => {
                         setSelectedRow(file.id);
                         activateSubMenu();
                       }}
@@ -235,20 +225,21 @@ const FilesPage: React.FC<IFileProps> = ({ limit =5}) => {
             )}
           </tbody>
         </table>
-
-        <ReactPaginate
-          pageCount={totalPage}
-          onPageChange={onChangePage}
-          previousLabel=""
-          nextLabel=""
-          containerClassName={s.paginationButtons}
-          previousClassName={s.preButton}
-          nextClassName={s.nextButton}
-          activeClassName={s.paginationActive}
-          disabledClassName={s.paginationDisabled}
-          pageRangeDisplayed={1}
-          marginPagesDisplayed={2}
-        />
+        {totalPage > 1 ? (
+          <ReactPaginate
+            pageCount={totalPage}
+            onPageChange={onChangePage}
+            previousLabel="<"
+            nextLabel=">"
+            containerClassName={s.paginationButtons}
+            previousClassName={s.preButton}
+            nextClassName={s.nextButton}
+            activeClassName={s.paginationActive}
+            disabledClassName={s.paginationDisabled}
+            pageRangeDisplayed={1}
+            marginPagesDisplayed={2}
+          />
+        ) : null}
       </div>
     </div>
   );

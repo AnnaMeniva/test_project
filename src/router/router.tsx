@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
-import { CreatePage } from "../components/Pages/CreatePage/CreatePage";
+import CreatePage  from "../components/Pages/CreatePage/CreatePage";
 import ErrorPage from "../components/Pages/ErrorPage/ErrorPage";
 import FilesPage, {
   filesAction,
@@ -29,16 +29,6 @@ export const router = createBrowserRouter([
         action: pageAction,
         loader: pageLoader,
         element: <ViewSitePage />,
-        // children:[
-        //   {
-        //     path: "/pages?title={params}",
-        //     element:<ViewSitePage/>,
-        //     loader: async ({params, request}) => {
-        //       const sortData = await fetch(`/pages?title=${params}`)
-        //       return sortData
-        //     }
-        //   }
-        // ]
       },
 
       {

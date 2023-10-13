@@ -49,7 +49,7 @@ export const pageAction = async ({ request }: any) => {
 
 const ViewSitePage: React.FC = () => {
   const pages = useLoaderData() as IPage[];
-  const [data, setData] = useState  <IPage[]>(pages);
+  const [data, setData] = useState<IPage[]>(pages);
 
   const [params, setParams] = useSearchParams();
   const [submenu, setSubmenu] = useState(false);

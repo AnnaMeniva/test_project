@@ -115,10 +115,7 @@
     cursor: pointer;
     text-align: center;
 }
-// .nextButton,
-// .preButton{
-//     display: none;
-// }
+
 .paginationButtons a{  
     display: block;
     height: 2rem;
@@ -130,4 +127,7 @@
     border-radius: 50%;
     color: white;
     background-color: #17177e;
+}
+.paginationDisabled{
+    display: none;
 }
